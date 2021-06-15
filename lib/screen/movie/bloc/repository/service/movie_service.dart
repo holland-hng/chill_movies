@@ -4,6 +4,8 @@ class MovieService {
   List<MovieEntity> getRelatedMovies(String movieID) {
     return [
       MovieEntity(
+        urlTrailer: 'https://www.youtube.com/watch?v=C_puVuHoR6o',
+        name: 'Fast & Furious',
         urlMovie:
             'https://cdn.tingtong.xyz/2021/06/10/FastFive(2011)%5B720P%5D-de42cf93d7.mp4',
         casts:
@@ -16,16 +18,17 @@ class MovieService {
         urlCover:
             'https://img.himovies.to/resize/1280x768/1d/82/1d825f1399ccdb52c0327dd7296ad2c4/1d825f1399ccdb52c0327dd7296ad2c4.jpg',
         urlAvatar:
-            'https://img.himovies.to/resize/180x270/3e/d2/3ed20…41b7c6dda3a6/3ed20afd5b521da5b79241b7c6dda3a6.jpg',
+            'https://img.himovies.to/resize/180x270/fb/fd/fbfdad3efe01fa2e00fa97590941f511/fbfdad3efe01fa2e00fa97590941f511.jpg',
         releaseDate: '2019-08-01',
         desciption:
             'A spinoff of the Furious\' Fate, Emphasizing Johnson\'s US Diplomatic Security Agent Luke Hobbs forming an Improbable alliance with the Deckard Shaw of Statham.',
       ),
       MovieEntity(
+        urlTrailer: 'https://www.youtube.com/watch?v=C_puVuHoR6o',
         urlCover:
             'https://img.himovies.to/resize/1280x768/6d/d5/6dd5e77bff17aecda72c26312bfb7848/6dd5e77bff17aecda72c26312bfb7848.jpg',
         urlAvatar:
-            'https://img.himovies.to/resize/180x270/86/d5/86d59…fb48512e7e37/86d59398d63d23dea5a4fb48512e7e37.jpg',
+            'https://img.himovies.to/resize/180x270/86/d5/86d59398d63d23dea5a4fb48512e7e37/86d59398d63d23dea5a4fb48512e7e37.jpg',
         urlMovie:
             'https://cdn.tingtong.xyz/2021/06/10/FastFive(2011)%5B720P%5D-de42cf93d7.mp4',
         name: 'Fast & Furious 6',

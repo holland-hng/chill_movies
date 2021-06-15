@@ -20,7 +20,8 @@ class _MovieScreenState extends State<MovieScreen> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<MovieBloc>(
-          create: (BuildContext context) => inject(),
+          create: (BuildContext context) =>
+              inject()..add(FetchRelatedMoviesEvent()),
         ),
       ],
       child: AppPlaform.isWeb ? MovieWebScreen() : MovieMobileScreen(),

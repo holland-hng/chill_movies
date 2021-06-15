@@ -5,7 +5,7 @@ import 'screen/movie/movie_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await configureInjection();
+  await configureInjection();
   runApp(RootApp());
 }
 

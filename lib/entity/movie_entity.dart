@@ -15,8 +15,10 @@ class MovieEntity {
   final String? country;
   final String? producttion;
   final double? imdb;
+  final String? urlTrailer;
 
   MovieEntity({
+    this.urlTrailer,
     this.name,
     this.imdb,
     this.id,

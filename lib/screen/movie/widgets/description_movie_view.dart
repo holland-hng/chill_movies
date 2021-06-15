@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'info_movie_view.dart';
 
 class DescriptionMovieView extends StatelessWidget {
