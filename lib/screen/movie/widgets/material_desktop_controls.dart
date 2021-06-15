@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:chewie/src/animated_play_pause.dart';
 import 'package:chewie/src/center_play_button.dart';
@@ -127,6 +128,40 @@ class _MaterialDesktopControlsState extends State<MaterialDesktopControls>
     }
 
     super.didChangeDependencies();
+  }
+
+  Widget _buildPiPButton({
+    BuildContext? context,
+    IconData? icon,
+    bool isPadded = false,
+  }) {
+    return AnimatedOpacity(
+      opacity: notifier.hideStuff ? 0.0 : 1.0,
+      duration: const Duration(milliseconds: 250),
+      child: IconButton(
+        padding: isPadded ? const EdgeInsets.all(8.0) : EdgeInsets.zero,
+        onPressed: () async {
+          _hideTimer?.cancel();
+
+          // if (Platform.isIOS) {
+          //   return _chewieController?.videoPlayerController?.enablePictureInPicture(
+          //     left: 0,
+          //     top: 0,
+          //     width: renderBox.size.width,
+          //     height: renderBox.size.height,
+          //   );
+          // }
+
+          if (_latestValue.isPlaying) {
+            _startHideTimer();
+          }
+        },
+        icon: Icon(
+          icon ?? Icons.more_vert,
+          color: Colors.white,
+        ),
+      ),
+    );
   }
 
   Widget _buildOptionsButton({
@@ -266,8 +301,14 @@ class _MaterialDesktopControlsState extends State<MaterialDesktopControls>
                     else
                       _buildPosition(iconColor),
                     const Spacer(),
+                    _buildPiPButton(
+                      context: context,
+                      icon: Icons.picture_in_picture,
+                    ),
                     if (chewieController.showOptions)
-                      _buildOptionsButton(icon: Icons.settings),
+                      _buildOptionsButton(
+                        icon: Icons.settings,
+                      ),
                     if (chewieController.allowFullScreen) _buildExpandButton(),
                   ],
                 ),

@@ -3,7 +3,6 @@ import 'package:chill_movies/core/widgets/app_size.dart';
 import 'package:chill_movies/core/widgets/constant.dart';
 import 'package:chill_movies/core/widgets/film_card.dart';
 import 'package:chill_movies/core/widgets/header_web.dart';
-import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,7 +20,6 @@ class MovieWebScreen extends StatefulWidget {
 }
 
 class _MovieWebScreenState extends State<MovieWebScreen> {
-  FlickManager? flickManager;
   VideoPlayerController? _videoPlayerController;
   ChewieController? _chewieController;
 
