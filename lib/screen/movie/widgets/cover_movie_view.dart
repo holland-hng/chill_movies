@@ -22,6 +22,7 @@ class CoverMovieView extends StatelessWidget {
         children: [
           SizedBox.expand(
             child: CachedNetworkImage(
+              fadeInDuration: Duration(microseconds: 0),
               fit: BoxFit.cover,
               imageUrl: info?.urlCover ?? "",
             ),

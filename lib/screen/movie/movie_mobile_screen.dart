@@ -2,10 +2,9 @@ import 'package:chewie/chewie.dart';
 import 'package:chill_movies/core/widgets/app_size.dart';
 import 'package:chill_movies/core/widgets/constant.dart';
 import 'package:chill_movies/core/widgets/dismiss_keyboard.dart';
-import 'package:chill_movies/core/widgets/film_card.dart';
 import 'package:chill_movies/core/widgets/header_mobile.dart';
 import 'package:chill_movies/entity/%08movie_entity.dart';
-
+import 'package:chill_movies/screen/movie/widgets/material_desktop_controls.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,8 @@ class MovieMobileScreen extends StatefulWidget {
   _MovieMobileScreenState createState() => _MovieMobileScreenState(movieInfo);
 }
 
-class _MovieMobileScreenState extends State<MovieMobileScreen> {
+class _MovieMobileScreenState extends State<MovieMobileScreen>
+    with WidgetsBindingObserver {
   final MovieEntity? _movieInfo;
   FlickManager? flickManager;
   VideoPlayerController? _videoPlayerController;
@@ -36,24 +36,44 @@ class _MovieMobileScreenState extends State<MovieMobileScreen> {
   void dispose() {
     _videoPlayerController?.dispose();
     _chewieController?.dispose();
+    WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
   }
 
   @override
   void initState() {
     _videoPlayerController =
-        VideoPlayerController.network(_movieInfo?.urlMovie ?? "")..initialize();
+        VideoPlayerController.network(_movieInfo?.urlMovie ?? "");
+    initPlayer();
+    WidgetsBinding.instance?.addObserver(this);
+    super.initState();
+  }
+
+  bool videoInitialize = false;
+
+  Future<void> initPlayer() async {
+    await _videoPlayerController?.initialize();
 
     _chewieController = ChewieController(
-      aspectRatio: 16 / 9,
+      customControls: MaterialDesktopControls(),
+      aspectRatio: _videoPlayerController?.value.aspectRatio,
       videoPlayerController: _videoPlayerController!,
       autoPlay: false,
       looping: true,
     );
-    super.initState();
+    setState(() {
+      videoInitialize = true;
+    });
   }
 
   bool _isUserHasClickPlay = false;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    print(state);
+  }
+
   @override
   Widget build(BuildContext context) {
     AppSize.config(context);
@@ -85,6 +105,8 @@ class _MovieMobileScreenState extends State<MovieMobileScreen> {
               floating: true,
               title: SearchMobileView(),
               backgroundColor: Colors.black,
+              stretch: true,
+              snap: true,
             ),
             SliverToBoxAdapter(
               child: Column(
@@ -96,10 +118,18 @@ class _MovieMobileScreenState extends State<MovieMobileScreen> {
                         child: Container(
                           color: Colors.black,
                           width: AppSize.width,
-                          height: (AppSize.width * 9 / 16).floorToDouble(),
-                          child: Chewie(
-                            controller: _chewieController!,
-                          ),
+                          height: videoInitialize
+                              ? AppSize.width /
+                                  (_videoPlayerController?.value.aspectRatio ??
+                                      1)
+                              : (AppSize.width * 9 / 16).floorToDouble(),
+                          child: !videoInitialize
+                              ? Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : Chewie(
+                                  controller: _chewieController!,
+                                ),
                         ),
                       ),
                       !_isUserHasClickPlay
@@ -154,7 +184,7 @@ class _MovieMobileScreenState extends State<MovieMobileScreen> {
                   Container(
                     width: AppSize.width,
                     color: AppColor.primaryColor,
-                    height: 1000,
+                    height: 500,
                   )
                 ],
               ),
