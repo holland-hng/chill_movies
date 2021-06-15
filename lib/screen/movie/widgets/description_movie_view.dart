@@ -1,9 +1,12 @@
+import 'package:chill_movies/entity/%08movie_entity.dart';
 import 'package:flutter/material.dart';
 import 'info_movie_view.dart';
 
 class DescriptionMovieView extends StatelessWidget {
+  final MovieEntity? info;
   const DescriptionMovieView({
     Key? key,
+    this.info,
   }) : super(key: key);
 
   @override
@@ -19,35 +22,33 @@ class DescriptionMovieView extends StatelessWidget {
             bottom: 10,
           ),
           child: Text(
-            "After a crime brings them back to L.A., fugitive ex-con Dom Toretto re-ignites his feud with agent Brian O'Conner. However, while they're forced to face a enemy, both Dom and Brian must devote to an new trust if they hope to out maneuver him. And the two men will find the ideal way to get revenge: push the limits of what's potential behind this wheel.",
+            info?.desciption ?? "",
             style: TextStyle(color: Colors.white),
           ),
         ),
         InfoMovieView(
           title: "Released",
-          content: "2009-04-02",
+          content: info?.releaseDate,
         ),
         InfoMovieView(
           title: "Genre",
-          content: "Thriller, Action, Drama, Crime",
+          content: info?.genre,
         ),
         InfoMovieView(
           title: "Casts",
-          content:
-              "Roger Fan, Laz Alonso, Loren Lazerine, Assaf Cohen, Julian Starks2",
+          content: info?.casts,
         ),
         InfoMovieView(
           title: "Duration",
-          content: "107 min",
+          content: info?.duration,
         ),
         InfoMovieView(
           title: "Country",
-          content: "United States of America",
+          content: info?.country,
         ),
         InfoMovieView(
           title: "Production",
-          content:
-              "One Race, Dentsu, Universal Pictures, Original Film, Relativity Media",
+          content: info?.producttion,
         ),
       ],
     );

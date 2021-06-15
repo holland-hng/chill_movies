@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chill_movies/core/widgets/app_navigator.dart';
 import 'package:chill_movies/entity/%08movie_entity.dart';
+import 'package:chill_movies/screen/movie/movie_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'app_size.dart';
@@ -82,9 +84,14 @@ class _FilmCardState extends State<FilmCard> {
           ],
         ),
         SizedBox.expand(
-          child: MaterialButton(
-            onPressed: () {},
-          ),
+          child: MaterialButton(onPressed: () {
+            AppNavigator.push(
+              context,
+              MovieScreen(
+                movieInfo: _info,
+              ),
+            );
+          }),
         )
       ],
     );

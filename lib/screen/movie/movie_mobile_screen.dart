@@ -4,6 +4,7 @@ import 'package:chill_movies/core/widgets/constant.dart';
 import 'package:chill_movies/core/widgets/dismiss_keyboard.dart';
 import 'package:chill_movies/core/widgets/film_card.dart';
 import 'package:chill_movies/core/widgets/header_mobile.dart';
+import 'package:chill_movies/entity/%08movie_entity.dart';
 
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,16 +17,20 @@ import 'widgets/related_movies_view.dart';
 import 'widgets/trailer_button.dart';
 
 class MovieMobileScreen extends StatefulWidget {
-  const MovieMobileScreen({Key? key}) : super(key: key);
+  final MovieEntity? movieInfo;
+  const MovieMobileScreen({Key? key, this.movieInfo}) : super(key: key);
 
   @override
-  _MovieMobileScreenState createState() => _MovieMobileScreenState();
+  _MovieMobileScreenState createState() => _MovieMobileScreenState(movieInfo);
 }
 
 class _MovieMobileScreenState extends State<MovieMobileScreen> {
+  final MovieEntity? _movieInfo;
   FlickManager? flickManager;
   VideoPlayerController? _videoPlayerController;
   ChewieController? _chewieController;
+
+  _MovieMobileScreenState(this._movieInfo);
 
   @override
   void dispose() {
@@ -36,9 +41,8 @@ class _MovieMobileScreenState extends State<MovieMobileScreen> {
 
   @override
   void initState() {
-    _videoPlayerController = VideoPlayerController.network(
-        "https://cdn.tingtong.xyz/2021/06/10/FastFive(2011)%5B720P%5D-de42cf93d7.mp4")
-      ..initialize();
+    _videoPlayerController =
+        VideoPlayerController.network(_movieInfo?.urlMovie ?? "")..initialize();
 
     _chewieController = ChewieController(
       aspectRatio: 16 / 9,
@@ -77,6 +81,7 @@ class _MovieMobileScreenState extends State<MovieMobileScreen> {
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
+              automaticallyImplyLeading: false,
               floating: true,
               title: SearchMobileView(),
               backgroundColor: Colors.black,
@@ -99,6 +104,7 @@ class _MovieMobileScreenState extends State<MovieMobileScreen> {
                       ),
                       !_isUserHasClickPlay
                           ? CoverMovieView(
+                              info: _movieInfo,
                               playMovie: () {
                                 setState(() {
                                   _isUserHasClickPlay = true;
@@ -114,7 +120,7 @@ class _MovieMobileScreenState extends State<MovieMobileScreen> {
                       padding: const EdgeInsets.only(
                           left: 15, top: 30, bottom: 15, right: 15),
                       child: Text(
-                        "Fast & Furious",
+                        _movieInfo?.name ?? "",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
@@ -125,11 +131,14 @@ class _MovieMobileScreenState extends State<MovieMobileScreen> {
                       ),
                     ),
                   TrailerButton(
+                    info: _movieInfo,
                     onClickHD: () {},
                     onClickIMDB: () {},
                     onClickTrailer: () {},
                   ),
-                  DescriptionMovieView(),
+                  DescriptionMovieView(
+                    info: _movieInfo,
+                  ),
                   Padding(
                     padding:
                         const EdgeInsets.only(left: 15, top: 30, bottom: 15),

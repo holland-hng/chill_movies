@@ -1,12 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chill_movies/core/widgets/app_size.dart';
 import 'package:chill_movies/core/widgets/constant.dart';
+import 'package:chill_movies/entity/%08movie_entity.dart';
 import 'package:flutter/material.dart';
 
 class CoverMovieView extends StatelessWidget {
+  final MovieEntity? info;
   final Function? playMovie;
   const CoverMovieView({
     Key? key,
     this.playMovie,
+    this.info,
   }) : super(key: key);
 
   @override
@@ -17,9 +21,9 @@ class CoverMovieView extends StatelessWidget {
       child: Stack(
         children: [
           SizedBox.expand(
-            child: Image.network(
-              "https://img.himovies.to/resize/1280x768/71/54/715407760baa697b9fe3bed477a2dfcc/715407760baa697b9fe3bed477a2dfcc.jpg",
+            child: CachedNetworkImage(
               fit: BoxFit.cover,
+              imageUrl: info?.urlCover ?? "",
             ),
           ),
           Container(
@@ -63,7 +67,7 @@ class CoverMovieView extends StatelessWidget {
             child: Container(
               width: AppSize.width - 30,
               child: Text(
-                "Fast & Furious",
+                info?.name ?? "",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,

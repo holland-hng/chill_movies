@@ -1,9 +1,11 @@
 import 'package:chill_movies/core/widgets/app_size.dart';
 import 'package:chill_movies/core/widgets/constant.dart';
+import 'package:chill_movies/entity/%08movie_entity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TrailerButton extends StatelessWidget {
+  final MovieEntity? info;
   final Function? onClickTrailer;
   final Function? onClickHD;
   final Function? onClickIMDB;
@@ -12,6 +14,7 @@ class TrailerButton extends StatelessWidget {
     this.onClickTrailer,
     this.onClickHD,
     this.onClickIMDB,
+    this.info,
   }) : super(key: key);
 
   @override
@@ -96,7 +99,7 @@ class TrailerButton extends StatelessWidget {
                 width: 15,
               ),
               Text(
-                "IMDB: 6.6",
+                "IMDB: ${info?.imdb}",
                 style: TextStyle(
                     color: Color.fromARGB(255, 255, 167, 45),
                     fontWeight: FontWeight.bold),
